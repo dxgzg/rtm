@@ -21,6 +21,9 @@ def readMetaXlsx():
         key = row[0]
         value = row[1]
 
+        if key is None:
+            continue
+
         if const.META_BASE_MAP.get(key):
             print(f"error:key:{key} is repeat")
             exit(-1)
