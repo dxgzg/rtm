@@ -35,4 +35,4 @@ def readMetaXlsx():
         const.META_BASE_MAP[key] = value
 
     wb.close()
-    print(const.META_BASE_MAP)
+    # print(const.META_BASE_MAP)

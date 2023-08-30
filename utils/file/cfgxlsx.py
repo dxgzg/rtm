@@ -12,7 +12,7 @@ def getCfgPath():
 
 
 def readCfgData(file_path):
-    print(file_path)
+    # print(file_path)
     wb = load_workbook(filename=file_path)
     sheet = wb['Sheet1']
 
@@ -22,15 +22,28 @@ def readCfgData(file_path):
     for column in columns:
         #  1列4个关键字
         if len(column) < 4:
-            print(f"error {file_path} column not equal 4")
+            print(f"error file_path:{file_path} column not equal 4")
             exit(-1)
 
         field_english_name = column[0]
         if field_english_name is None:
             continue
 
-        obj = tableCfg.TableCfg(field_english_name, column[1], column[2], column[3])
-        field_list .append(obj)
+        field_type = column[2]
+        # todo 后续可以扩展
+        flag = False
+        if field_type in const.EXPORT_GO_CODE_TYPE:
+            flag = True
+            field_type = const.EXPORT_GO_CODE_TYPE[field_type]
+
+        if not flag:
+            print(f"field type error file_path:{file_path} "
+                  f"field_english_name:{field_english_name} "
+                  f"field_type:{field_type}")
+            exit(-1)
+
+        obj = tableCfg.TableCfg(field_english_name, column[1], field_type, column[3])
+        field_list.append(obj)
         # print(obj)
 
     const.TABLE_DEFINE_MAP[file_path] = field_list
@@ -54,7 +67,7 @@ def readCfgData(file_path):
 
 
 def readAllCfgData(path=getCfgPath()):
-    print("path:", path)
+    # print("path:", path)
 
     for filename in os.listdir(path):
         # 如果当前路径表示一个目录，则递归读取该目录下的文件

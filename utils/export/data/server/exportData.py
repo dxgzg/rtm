@@ -26,21 +26,21 @@ def procServerData(file_name, export_name):
         data_list.append(field_english_name_map)
 
     export_data = {export_name + "Data": data_list}
-    json_str = json.dumps(export_data,indent=4)
+    json_str = json.dumps(export_data, indent=4)
     data_path = os.path.join(getServerDistDataPath(), export_name + ".json")
     with open(data_path, "w") as json_file:
         json_file.write(json_str)
 
 
 def exportServerData():
-    for file_name, field_name in const.TABLE_DEFINE_MAP.items():
-        chinese_file_name = os.path.basename(file_name).replace(".xlsx", "")
+    for file_name_path in const.TABLE_DEFINE_MAP:
+        chinese_file_name = os.path.basename(file_name_path).replace(".xlsx", "")
 
         export_file_name = const.META_BASE_MAP[chinese_file_name]
         if export_file_name is None or export_file_name == "":
-            print(f"error file_name:{file_name} not exist meta data")
+            print(f"error file_name_path:{file_name_path} not exist meta data")
             exit(-1)
 
         print("chinese name:", chinese_file_name, " english name:", export_file_name)
 
-        procServerData(file_name, export_file_name)
+        procServerData(file_name_path, export_file_name)
