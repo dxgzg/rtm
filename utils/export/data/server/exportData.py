@@ -2,6 +2,8 @@ import json
 import os
 
 from common import const
+from utils.file.base import getExportNameByFilePathExist
+from utils.file.base import getExportNameByFileNameExist
 
 
 def getServerDistDataPath():
@@ -33,14 +35,9 @@ def procServerData(file_name, export_name):
 
 
 def exportServerData():
-    for file_name_path in const.TABLE_DEFINE_MAP:
-        chinese_file_name = os.path.basename(file_name_path).replace(".xlsx", "")
+    for file_name in const.TABLE_DEFINE_MAP:
+        export_file_name = getExportNameByFileNameExist(file_name)
 
-        export_file_name = const.META_BASE_MAP[chinese_file_name]
-        if export_file_name is None or export_file_name == "":
-            print(f"error file_name_path:{file_name_path} not exist meta data")
-            exit(-1)
+        print("file name:", file_name, " english name:", export_file_name)
 
-        print("chinese name:", chinese_file_name, " english name:", export_file_name)
-
-        procServerData(file_name_path, export_file_name)
+        procServerData(file_name, export_file_name)

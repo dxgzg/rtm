@@ -5,6 +5,7 @@ from openpyxl import load_workbook
 
 from common import const
 from module import tableCfg
+from utils.file.base import filePath2FileNameExist
 
 
 def getCfgPath():
@@ -46,7 +47,8 @@ def readCfgData(file_path):
         field_list.append(obj)
         # print(obj)
 
-    const.TABLE_DEFINE_MAP[file_path] = field_list
+    file_name = filePath2FileNameExist(file_path)
+    const.TABLE_DEFINE_MAP[file_name] = field_list
 
     table_data_values = []
     # 按行去读
@@ -62,7 +64,8 @@ def readCfgData(file_path):
         # print(data)
         table_data_values.append(data)
 
-    const.TABLE_DATA_MAP[file_path] = table_data_values
+
+    const.TABLE_DATA_MAP[file_name] = table_data_values
     wb.close()
 
 
