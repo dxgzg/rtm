@@ -42,5 +42,3 @@ def exportServerData(file_name):
     print("file name:", file_name, " english name:", export_file_name)
 
     procServerData(file_name, export_file_name)
-    #  todo 挪位置
-    # exportGoCode(file_name)

@@ -18,7 +18,7 @@ type {TABLE_MANGER_REPLACE} struct {{
     {TABLE_MAP_REPLACE} map[uint32]*{TABLE_NAME_REPLACE}
 }}
 
-func New{TABLE_MANGER_REPLACE}(c *VersionConf) *{TABLE_MANGER_REPLACE} {{
+func New{TABLE_MANGER_REPLACE}(c *CfgDataConf) *{TABLE_MANGER_REPLACE} {{
     return &{TABLE_MANGER_REPLACE}{{
             {TABLE_MAP_REPLACE}: make(map[uint32]*{TABLE_NAME_REPLACE}, 0),
     }}
