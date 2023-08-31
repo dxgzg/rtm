@@ -4,6 +4,7 @@ import os
 from openpyxl import load_workbook
 
 from common import const
+from common.language import EXPORT_GO_CODE_TYPE
 from module import tableCfg
 from utils.file.base import filePath2FileNameExist
 
@@ -33,9 +34,9 @@ def readCfgData(file_path):
         field_type = column[2]
         # todo 后续可以扩展
         flag = False
-        if field_type in const.EXPORT_GO_CODE_TYPE:
+        if field_type in EXPORT_GO_CODE_TYPE:
             flag = True
-            field_type = const.EXPORT_GO_CODE_TYPE[field_type]
+            field_type = EXPORT_GO_CODE_TYPE[field_type]
 
         if not flag:
             print(f"field type error file_path:{file_path} "

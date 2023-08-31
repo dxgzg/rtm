@@ -5,6 +5,7 @@ from common import const
 from utils.export.data.server.exportCode import exportGoCode
 from utils.file.base import getExportNameByFilePathExist
 from utils.file.base import getExportNameByFileNameExist
+from utils.file.base import writeExportFile
 
 
 def getServerDistDataPath():
@@ -31,16 +32,15 @@ def procServerData(file_name, export_name):
     export_data = {export_name + "Data": data_list}
     json_str = json.dumps(export_data, indent=4)
     data_path = os.path.join(getServerDistDataPath(), export_name + ".json")
-    with open(data_path, "w") as json_file:
-        json_file.write(json_str)
+
+    writeExportFile(data_path,json_str)
 
 
-def exportServerData():
-    for file_name in const.TABLE_DEFINE_MAP:
-        export_file_name = getExportNameByFileNameExist(file_name)
+def exportServerData(file_name):
+    export_file_name = getExportNameByFileNameExist(file_name)
 
-        print("file name:", file_name, " english name:", export_file_name)
+    print("file name:", file_name, " english name:", export_file_name)
 
-        procServerData(file_name, export_file_name)
-        #  todo 挪位置
-        exportGoCode(file_name)
+    procServerData(file_name, export_file_name)
+    #  todo 挪位置
+    # exportGoCode(file_name)

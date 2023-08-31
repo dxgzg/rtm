@@ -84,3 +84,8 @@ def readMetaXlsx():
 
     wb.close()
     # print(const.META_BASE_MAP)
+
+
+def writeExportFile(data_path,data):
+    with open(data_path, "w") as f:
+        f.write(data)

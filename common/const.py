@@ -13,7 +13,4 @@ TABLE_DATA_MAP = {}  # key:fileName,value:每一行数据的数组
 EXPORT_SERVER_DATA_PATH = "./dist/server/data"
 EXPORT_SERVER_CODE_PATH = "./dist/server/code"
 
-# golang 导出类型检查
-EXPORT_GO_CODE_TYPE = {"str": "string", "string": "string",
-                       "int": "int32", "int8": "int8", "int32": "int32", "int64": "int64",
-                       "uint": "uint32", "uint32": "uint32", "uint64": "uint64"}
+
