@@ -5,6 +5,11 @@ from common import const
 from openpyxl import load_workbook
 
 
+def mkdir(dirName):
+    if not os.path.exists(dirName):
+        os.makedirs(dirName)
+
+
 def getMetaXlsxPath():
     return os.path.join(const.CFG_DIR_PATH, const.META_NAME)
 
@@ -22,6 +27,7 @@ def filePath2FileNameExist(file_path):
 
     return file_name
 
+
 def getExportNameByFileName(file_name):
     return const.META_BASE_MAP[file_name]
 
@@ -29,11 +35,12 @@ def getExportNameByFileName(file_name):
 def getExportNameByFileNameExist(file_name):
     export_name = getExportNameByFileName(file_name)
     if export_name is None or export_name == "":
-        print(f"error file_path:{file_path} file_name{file_name} export name not exist")
+        print(f"error file_name{file_name} export name not exist")
         exit(-1)
         return None
 
     return export_name
+
 
 def getExportNameByFilePath(file_path):
     file_name = filePath2FileName(file_path)
@@ -48,6 +55,7 @@ def getExportNameByFilePathExist(file_path):
     export_name = getExportNameByFileNameExist(file_name)
 
     return export_name
+
 
 def readMetaXlsx():
     wb = load_workbook(filename=getMetaXlsxPath())
