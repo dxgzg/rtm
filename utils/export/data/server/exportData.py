@@ -2,6 +2,7 @@ import json
 import os
 
 from common import const
+from utils.export.data.server.exportCode import exportGoCode
 from utils.file.base import getExportNameByFilePathExist
 from utils.file.base import getExportNameByFileNameExist
 
@@ -41,3 +42,5 @@ def exportServerData():
         print("file name:", file_name, " english name:", export_file_name)
 
         procServerData(file_name, export_file_name)
+        #  todo 挪位置
+        exportGoCode(file_name)

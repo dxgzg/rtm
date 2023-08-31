@@ -1,59 +1,56 @@
-tableNameReplace = "${TableName}"
-tableNameLowerReplace = "${tableNameLower}"
-tableFieldsReplace = "${tableContent}"
-tableMangerReplace = "${tableManger}"
-tableMapReplace = "${tableMap}"
-tableBaseReplace = "${tableBase}"
+TABLE_NAME_REPLACE = "${TableName}"
+TABLE_FIELDS_REPLACE = "${tableContent}"
+TABLE_MANGER_REPLACE = "${tableManger}"
+TABLE_MAP_REPLACE = "${tableMap}"
 
-go_template_code = f'''package conf
+GO_TEMPLATE_CODE = f'''package conf
 
 import "encoding/json"
 import "errors"
 import "fmt"
 import "os"
 
-type {tableNameReplace} struct {{
-{tableFieldsReplace}
+type {TABLE_NAME_REPLACE} struct {{
+{TABLE_FIELDS_REPLACE}
 }}
 
-type {tableMangerReplace} struct {{
-    {tableMapReplace} map[uint32]*{tableNameReplace}
+type {TABLE_MANGER_REPLACE} struct {{
+    {TABLE_MAP_REPLACE} map[uint32]*{TABLE_NAME_REPLACE}
 }}
 
-func New{tableMangerReplace}(c *VersionConf) *{tableMangerReplace} {{
-    return &{tableMangerReplace}{{
-            {tableMapReplace}: make(map[uint32]*{tableNameReplace}, 0),
+func New{TABLE_MANGER_REPLACE}(c *VersionConf) *{TABLE_MANGER_REPLACE} {{
+    return &{TABLE_MANGER_REPLACE}{{
+            {TABLE_MAP_REPLACE}: make(map[uint32]*{TABLE_NAME_REPLACE}, 0),
     }}
 }}
 
-func (m *{tableMangerReplace}) Get{tableNameReplace}(id uint32) (ptr *{tableNameReplace}, ok bool) {{
-    ptr, ok = m.{tableMapReplace}[id]
-    {tableBaseReplace}
+func (m *{TABLE_MANGER_REPLACE}) Get{TABLE_NAME_REPLACE}(id uint32) (ptr *{TABLE_NAME_REPLACE}, ok bool) {{
+    ptr, ok = m.{TABLE_MAP_REPLACE}[id]
     
     return
 }}
 
-func (m *{tableMangerReplace}) Get{tableMapReplace}() map[uint32]*{tableNameReplace} {{
-    return m.{tableMapReplace}
+func (m *{TABLE_MANGER_REPLACE}) Get{TABLE_MAP_REPLACE}() map[uint32]*{TABLE_NAME_REPLACE} {{
+    return m.{TABLE_MAP_REPLACE}
 }}
 
-func (m *{tableMangerReplace}) Get{tableNameReplace}Array() []*{tableNameReplace} {{
-    return m.{tableNameReplace}
+func (m *{TABLE_MANGER_REPLACE}) Get{TABLE_NAME_REPLACE}Array() []*{TABLE_NAME_REPLACE} {{
+    return m.{TABLE_NAME_REPLACE}
 }}
 
-func (m *{tableMangerReplace}) Load{tableNameReplace}(path string) error {{
+func (m *{TABLE_MANGER_REPLACE}) Load{TABLE_NAME_REPLACE}(path string) error {{
     content, err := os.ReadFile(path)
     if err != nil {{
-        return errors.New(fmt.Sprintf("Load {tableNameReplace} fail err=%v", err))
+        return errors.New(fmt.Sprintf("Load {TABLE_NAME_REPLACE} fail err=%v", err))
     }}
     
     err = json.Unmarshal(content,m)
     if err != nil {{
-        return errors.New(fmt.Sprintf("Load {tableNameReplace} unmarshal fail err=%v", err))
+        return errors.New(fmt.Sprintf("Load {TABLE_NAME_REPLACE} unmarshal fail err=%v", err))
     }}
     
-    for i, c := range m.{tableNameReplace} {{
-        m.{tableMapReplace}[c.Id] = m.{tableNameReplace}[i]
+    for i, c := range m.{TABLE_NAME_REPLACE} {{
+        m.{TABLE_MAP_REPLACE}[c.Id] = m.{TABLE_NAME_REPLACE}[i]
     }}
     return err
 }}
