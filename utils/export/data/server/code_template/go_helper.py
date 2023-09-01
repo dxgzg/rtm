@@ -1,8 +1,8 @@
-helperVersionReplace = "${helperVersion}"
-helperNewVersionReplace = "${helperNewVersion}"
-helperLoadReplace = "${helperLoad}"
+HELPER_VERSION_REPLACE = "${helperVersion}"
+HELPER_NEW_MANAGER_REPLACE = "${helperNewManager}"
+HELPER_LOAD_REPLACE = "${helperLoad}"
 
-helperTemp = f"""package conf
+HELPER_TEMP = f"""package conf
 
 import (
     "encoding/json"
@@ -15,7 +15,7 @@ import (
 )
 
 type CfgDataConf struct {{
-    {helperVersionReplace}
+    {HELPER_VERSION_REPLACE}
     Ver      int32
     LoadTime int64
     Revision int32
@@ -26,12 +26,12 @@ func NewCfgDataConf(revision int32) *CfgDataConf {{
         Revision: revision,
         LoadTime: time.Now().Unix(),
     }}
-    {helperNewVersionReplace}
+    {HELPER_NEW_MANAGER_REPLACE}
     return c
 }}
 
 func (c *CfgDataConf) Load(path string) error {{
-    {helperLoadReplace}
+    {HELPER_LOAD_REPLACE}
     return nil
 }}
 
@@ -50,32 +50,6 @@ func LoadAll(path string) error {{
     verConf.Ver = addVersion()
     _CfgDataConfs.Store(verConf.Ver, verConf)
     return nil
-}}
-
-func Init() error {{
-    go run()
-    return nil
-}}
-
-func run() {{
-    ticker := time.NewTicker(time.Minute)
-    for {{
-        select {{
-        case <-ticker.C:
-            tNow := time.Now().Unix()
-            _CfgDataConfs.Range(func(key, value interface{{}}) bool {{
-                ver := key.(int32)
-                if ver == GetVersion() {{
-                    return true
-                }}
-                v := value.(*CfgDataConf)
-                if v.LoadTime+CfgDataConfCacheTime > tNow {{
-                    _CfgDataConfs.Delete(key)
-                }}
-                return true
-            }})
-        }}
-    }}
 }}
 
 type LoadFunc func(conf *CfgDataConf, reload bool) error
