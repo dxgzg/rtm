@@ -13,4 +13,4 @@ TABLE_DATA_MAP = {}  # key:fileName,value:每一行数据的数组
 EXPORT_SERVER_DATA_PATH = "./dist/server/data"
 EXPORT_SERVER_CODE_PATH = "./dist/server/code"
 
-
+THREE_RD_PATH = "./3rd"
