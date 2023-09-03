@@ -16,23 +16,18 @@ def getServerDistDataPath():
 def procServerData(file_name, export_name):
     field_name_list = const.TABLE_DEFINE_MAP[file_name]
     field_value_list = const.TABLE_DATA_MAP[file_name]
-    if len(field_name_list) != len(field_value_list):
-        print(f"error field_name_list length is not equals field_value_list fileName:{file_name}")
-        exit(-1)
 
     data_list = []
-    for i in range(len(field_name_list)):
-        field_value = field_value_list[i]
-        field_english_name_map = {}
+    for field_values in field_value_list:
+        data_map = {}
+        for i, field_value in enumerate(field_values):
+            field_name_obj = field_name_list[i]
 
-        for j, field_name_obj in enumerate(field_name_list):
             field_type = field_name_obj.field_type
-            value = field_value[j]
-
             if field_type == "string":
-                value = str(value)
-            field_english_name_map[field_name_obj.field_english_name] = value
-        data_list.append(field_english_name_map)
+                field_value = str(field_value)
+            data_map[field_name_obj.field_english_name] = field_value
+        data_list.append(data_map)
 
     export_data = {getTableDataName(export_name): data_list}
     json_str = json.dumps(export_data, indent=4)

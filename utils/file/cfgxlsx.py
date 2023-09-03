@@ -60,11 +60,15 @@ def readCfgData(file_path):
             # 注释列跳过
             if col_note is None:
                 continue
+
+            cell = row[i]
+            if cell is None:
+                continue
             data.append(cell)
 
         # print(data)
-        table_data_values.append(data)
-
+        if len(data) != 0:
+            table_data_values.append(data)
 
     const.TABLE_DATA_MAP[file_name] = table_data_values
     wb.close()
