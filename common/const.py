@@ -12,5 +12,6 @@ TABLE_DATA_MAP = {}  # key:fileName,value:每一行数据的数组
 # 资源导出路径
 EXPORT_SERVER_DATA_PATH = "./dist/server/data"
 EXPORT_SERVER_CODE_PATH = "./dist/server/code"
+# EXPORT_SERVER_CODE_PATH = "H:\monsterGame\code\paramecium_server\conf"
 
 THREE_RD_PATH = "./3rd"

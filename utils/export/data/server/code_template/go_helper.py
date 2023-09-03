@@ -5,14 +5,10 @@ HELPER_LOAD_REPLACE = "${helperLoad}"
 HELPER_TEMP = f"""package conf
 
 import (
-    "encoding/json"
-    "errors"
-    "fmt"
-    "os"
-    "sync"
-    "sync/atomic"
     "time"
 )
+
+var globalCfgDataConf *CfgDataConf
 
 type CfgDataConf struct {{
     {HELPER_VERSION_REPLACE}
@@ -36,22 +32,27 @@ func (c *CfgDataConf) Load(path string) error {{
 }}
 
 func LoadAll(path string) error {{
-    revision, err := loadRevision(path)
+    /*revision, err := loadRevision(path)
     if err != nil {{
         return err
-    }}
-    verConf := NewCfgDataConf(revision.Revision)
+    }}*/
+    verConf := NewCfgDataConf(0)
     if err := verConf.Load(path); err != nil {{
         return err
     }}
-    if err := onLoadFunc(verConf); err != nil {{
+    globalCfgDataConf = verConf
+    /*if err := onLoadFunc(verConf); err != nil {{
         return err
     }}
     verConf.Ver = addVersion()
     _CfgDataConfs.Store(verConf.Ver, verConf)
+    */
+    
     return nil
 }}
-
+func getGlobalCfgDataConf() *CfgDataConf {{ return globalCfgDataConf }}
+// 以下为注释的代码
+/*
 type LoadFunc func(conf *CfgDataConf, reload bool) error
 
 var loadFuncs []LoadFunc = make([]LoadFunc, 0)
@@ -69,7 +70,7 @@ func onLoadFunc(verConf *CfgDataConf) error {{
         }}
     }}
     return nil
-}}
+}}*/
 """
 
 loadTemp = """if err := c.Load{}(path + "{}.xml"); err != nil {{

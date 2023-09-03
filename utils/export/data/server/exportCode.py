@@ -4,16 +4,9 @@ from common import const
 from common.const import EXPORT_SERVER_CODE_PATH
 from utils.export.data.server.code_template.go import *
 from utils.export.data.server.code_template.go_helper import *
-from utils.file.base import getExportNameByFileNameExist, writeExportFile
+from utils.file.base import getExportNameByFileNameExist, writeExportFile, getTableManagerName, getTableMapName, \
+    getTableDataName
 from utils.strconv import strconv
-
-
-def getTableManagerName(tableName):
-    return tableName + "Manager"
-
-
-def getTableMapName(tableName):
-    return tableName + "Map"
 
 
 def exportGoCode(file_name):
@@ -21,8 +14,10 @@ def exportGoCode(file_name):
 
     field_name_list = const.TABLE_DEFINE_MAP[file_name]
     for tableCfgObj in field_name_list:
-        fieldName = tableCfgObj.field_english_name
-        field = strconv.initialUpper(fieldName) + f''' `json:"{fieldName}"`'''
+        field_name = tableCfgObj.field_english_name
+        field_type = tableCfgObj.field_type
+
+        field = strconv.initialUpper(field_name) + f''' {field_type} `json:"{field_name}"`'''
         fields += field + "\n"
 
     export_name = getExportNameByFileNameExist(file_name)
@@ -34,6 +29,7 @@ def exportGoCode(file_name):
     go_code_file = go_code_file.replace(TABLE_FIELDS_REPLACE, fields)
     go_code_file = go_code_file.replace(TABLE_MANGER_REPLACE, tableManager)
     go_code_file = go_code_file.replace(TABLE_MAP_REPLACE, tableMap)
+    go_code_file = go_code_file.replace(FIELD_JSON_TAG_REPLACE, getTableDataName(export_name))
     # print(go_code_file)
 
     export_code_path = os.path.join(EXPORT_SERVER_CODE_PATH, export_name + ".go")
@@ -51,7 +47,7 @@ def exportGoHelperCode():
         tableManager = getTableManagerName(tableName)
 
         tableManagers += f"*{tableManager}\n"
-        tableNewManagers = f"c.{tableName}=New{tableName}()\n"
+        tableNewManagers = f"c.{tableManager}=New{tableManager}(c)\n"
         tableLoads = f'if err := c.Load{tableName}(path + "{export_name}.json");err!=nil{{return err}}'
 
     go_helper_code_file = HELPER_TEMP.replace(HELPER_VERSION_REPLACE, tableManagers)
@@ -60,4 +56,4 @@ def exportGoHelperCode():
 
     # print(go_helper_code_file)
     export_code_path = os.path.join(EXPORT_SERVER_CODE_PATH, "Helper.go")
-    writeExportFile(export_code_path,go_helper_code_file)
+    writeExportFile(export_code_path, go_helper_code_file)

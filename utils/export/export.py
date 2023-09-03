@@ -9,8 +9,9 @@ from utils.export.data.server.exportData import exportServerData
 
 
 def formatGoCode():
+    #  todo linux开发
     # if platform.system() == 'Linux':
-    #  todo linux测试
+
     # gofumptPath = linuxGofumptPath()
     #
     # subprocess.call([gofumptPath, "-l", "-w", define.go_out_dir], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -30,6 +31,7 @@ def export(client_code_type=CSHARP_LANGUAGE, server_code_type=GO_LANGUAGE):
         exportServerData(file_name)
         exportServerCode(file_name, server_code_type)
 
+    # 导出helper代码
     if server_code_type == GO_LANGUAGE:
         exportGoHelperCode()
         formatCode(GO_LANGUAGE)

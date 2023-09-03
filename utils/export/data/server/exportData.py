@@ -6,13 +6,13 @@ from utils.export.data.server.exportCode import exportGoCode
 from utils.file.base import getExportNameByFilePathExist
 from utils.file.base import getExportNameByFileNameExist
 from utils.file.base import writeExportFile
+from utils.file.base import getTableDataName
 
 
 def getServerDistDataPath():
     return const.EXPORT_SERVER_DATA_PATH
 
 
-# export_name is table english name
 def procServerData(file_name, export_name):
     field_name_list = const.TABLE_DEFINE_MAP[file_name]
     field_value_list = const.TABLE_DATA_MAP[file_name]
@@ -29,7 +29,7 @@ def procServerData(file_name, export_name):
             field_english_name_map[field_name_obj.field_english_name] = field_value[j]
         data_list.append(field_english_name_map)
 
-    export_data = {export_name + "Data": data_list}
+    export_data = {getTableDataName(export_name): data_list}
     json_str = json.dumps(export_data, indent=4)
     data_path = os.path.join(getServerDistDataPath(), export_name + ".json")
 

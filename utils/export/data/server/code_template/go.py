@@ -2,6 +2,7 @@ TABLE_NAME_REPLACE = "${TableName}"
 TABLE_FIELDS_REPLACE = "${tableContent}"
 TABLE_MANGER_REPLACE = "${tableManger}"
 TABLE_MAP_REPLACE = "${tableMap}"
+FIELD_JSON_TAG_REPLACE = "${fieldJsonTag}"
 
 GO_TEMPLATE_CODE = f'''package conf
 
@@ -15,6 +16,7 @@ type {TABLE_NAME_REPLACE} struct {{
 }}
 
 type {TABLE_MANGER_REPLACE} struct {{
+    {TABLE_NAME_REPLACE} []*{TABLE_NAME_REPLACE} `json:"{FIELD_JSON_TAG_REPLACE}"`
     {TABLE_MAP_REPLACE} map[uint32]*{TABLE_NAME_REPLACE}
 }}
 
@@ -32,10 +34,6 @@ func (m *{TABLE_MANGER_REPLACE}) Get{TABLE_NAME_REPLACE}(id uint32) (ptr *{TABLE
 
 func (m *{TABLE_MANGER_REPLACE}) Get{TABLE_MAP_REPLACE}() map[uint32]*{TABLE_NAME_REPLACE} {{
     return m.{TABLE_MAP_REPLACE}
-}}
-
-func (m *{TABLE_MANGER_REPLACE}) Get{TABLE_NAME_REPLACE}Array() []*{TABLE_NAME_REPLACE} {{
-    return m.{TABLE_NAME_REPLACE}
 }}
 
 func (m *{TABLE_MANGER_REPLACE}) Load{TABLE_NAME_REPLACE}(path string) error {{
