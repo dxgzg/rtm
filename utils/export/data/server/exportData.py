@@ -26,14 +26,19 @@ def procServerData(file_name, export_name):
         field_english_name_map = {}
 
         for j, field_name_obj in enumerate(field_name_list):
-            field_english_name_map[field_name_obj.field_english_name] = field_value[j]
+            field_type = field_name_obj.field_type
+            value = field_value[j]
+
+            if field_type == "string":
+                value = str(value)
+            field_english_name_map[field_name_obj.field_english_name] = value
         data_list.append(field_english_name_map)
 
     export_data = {getTableDataName(export_name): data_list}
     json_str = json.dumps(export_data, indent=4)
     data_path = os.path.join(getServerDistDataPath(), export_name + ".json")
 
-    writeExportFile(data_path,json_str)
+    writeExportFile(data_path, json_str)
 
 
 def exportServerData(file_name):

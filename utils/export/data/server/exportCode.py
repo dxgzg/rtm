@@ -48,7 +48,7 @@ def exportGoHelperCode():
 
         tableManagers += f"*{tableManager}\n"
         tableNewManagers = f"c.{tableManager}=New{tableManager}(c)\n"
-        tableLoads = f'if err := c.Load{tableName}(path + "{export_name}.json");err!=nil{{return err}}'
+        tableLoads = f'if err := c.Load{tableName}(filepath.Join(path, "{export_name}.json"));err!=nil{{return err}}'
 
     go_helper_code_file = HELPER_TEMP.replace(HELPER_VERSION_REPLACE, tableManagers)
     go_helper_code_file = go_helper_code_file.replace(HELPER_NEW_MANAGER_REPLACE, tableNewManagers)

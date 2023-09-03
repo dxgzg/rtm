@@ -6,6 +6,7 @@ HELPER_TEMP = f"""package conf
 
 import (
     "time"
+    "path/filepath"
 )
 
 var globalCfgDataConf *CfgDataConf
@@ -50,7 +51,7 @@ func LoadAll(path string) error {{
     
     return nil
 }}
-func getGlobalCfgDataConf() *CfgDataConf {{ return globalCfgDataConf }}
+func GetGlobalCfgDataConf() *CfgDataConf {{ return globalCfgDataConf }}
 // 以下为注释的代码
 /*
 type LoadFunc func(conf *CfgDataConf, reload bool) error
